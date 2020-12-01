@@ -11,6 +11,7 @@
     <Copyright>Maincotech</Copyright>
     <PackageProjectUrl>https://github.com/maincotech/webcomponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/maincotech/webcomponents</RepositoryUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 
