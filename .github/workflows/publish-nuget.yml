@@ -18,8 +18,13 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Publish NuGet
+    - name: Publish NuGet Maincotech.Web.Components
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
           PROJECT_FILE_PATH: src/Maincotech.Web.Components/Maincotech.Web.Components.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+    - name: Publish NuGet Maincotech.Blazor
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+          PROJECT_FILE_PATH: src/Maincotech.Blazor/Maincotech.Blazor.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}

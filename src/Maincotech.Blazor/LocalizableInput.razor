@@ -1,0 +1,47 @@
+﻿<div class="code-box">
+    <section>
+        @*<AntDesign.Input @bind-Value="Name" OnChange="OnNameChanged" TValue="string">
+        </AntDesign.Input>*@
+        @ChildContent
+    </section>
+
+    <section class="code-box-meta markdown">
+        <div class="code-box-actions">
+            <Icon OnClick="ShowModal" Type="translation"></Icon>
+            <Icon OnClick="@(async _=>await Copy())" Type="copy"></Icon>
+        </div>
+    </section>
+</div>
+
+
+
+@{
+    RenderFragment footer = @<Template>
+        <Button OnClick="@HandleOk" @key="@( "submit" )"
+                Type="primary"
+                Loading="@_loading">
+            Submit
+        </Button>
+        <Button OnClick="@HandleCancel" @key="@( "back" )">Return</Button>
+    </Template>;
+
+   
+}
+
+<Modal Title="@("Localization")"
+       Visible="@_visible"
+       OnOk="@HandleOk"
+       OnCancel="@HandleCancel"
+       Footer="@footer">
+    <Form Model="@_model"
+          LabelCol="new ColLayoutParam { Span = 8 }"
+          WrapperCol="new ColLayoutParam { Span = 12 }"
+          Loading="_loading">
+        <FormItem Label="Language">
+            <Select Options="@_languages" @bind-Value="CurrentLanguage" OnChange="OnChange"></Select>
+        </FormItem>
+        <FormItem Label="Terms">
+            <TextArea MinRows="1" @bind-Value="Terms" />
+        </FormItem>
+    </Form>
+</Modal>
