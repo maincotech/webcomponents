@@ -1,0 +1,31 @@
+﻿using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Html;
+
+namespace Maincotech.Web.Components.DocumentMetadata.Renderers
+{
+    internal readonly partial struct Renderer
+    {
+        public static Renderer Stylesheet(string id, string url)
+        {
+            if (string.IsNullOrEmpty(id))
+                id = url;
+            return new Renderer(RendererFlag.Stylesheet | RendererFlag.UniqueByName, url, id);
+        }
+
+        public int StylesheetRender(RenderTreeBuilder renderTreeBuilder, int seq)
+        {
+            renderTreeBuilder.OpenElement(seq + 0, "link");
+            renderTreeBuilder.AddAttribute(seq + 1, "href", _mainAttributeValue);
+            renderTreeBuilder.AddAttribute(seq + 2, "rel", "stylesheet");
+            if (!string.IsNullOrEmpty(_name) && _name != _mainAttributeValue)
+                renderTreeBuilder.AddAttribute(seq + 3, "id", _name);
+            renderTreeBuilder.CloseElement();
+            return seq + 4;
+        }
+
+        public void StylesheetRender(IHtmlContentBuilder htmlContentBuilder)
+        {
+            htmlContentBuilder.AppendHtml($" <link rel='stylesheet' href='{_mainAttributeValue}'>");
+        }
+    }
+}
