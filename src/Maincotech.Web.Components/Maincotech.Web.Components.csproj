@@ -8,6 +8,9 @@
     <Description>Web components including JQuery, Vditor, DocumentMetadata, ImangeHandler</Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Maincotech</Copyright>
+    <PackageProjectUrl>https://github.com/maincotech/webcomponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/maincotech/webcomponents</RepositoryUrl>
   </PropertyGroup>
 
 
