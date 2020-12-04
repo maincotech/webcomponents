@@ -81,7 +81,7 @@ namespace Maincotech.Blazor.Routing
 
             if (segments.Length == 0)
             {
-                var indexRoute = Routes.SingleOrDefault(x => x.PageType.FullName != null && x.PageType.FullName.ToLower().EndsWith("index"));
+                var indexRoute = Routes.FirstOrDefault(x => x.PageType.FullName != null && x.PageType.FullName.ToLower().EndsWith("index"));
 
                 if (indexRoute != null)
                 {

@@ -51,7 +51,7 @@ namespace Maincotech.Blazor.Routing
                 throw new InvalidOperationException($"The {nameof(ConventionRouter)} component requires a value for the parameter {nameof(NotFound)}.");
             }
 
-            RouteManager.Initialise(AppAssembly);
+          //  RouteManager.Initialise(AppAssembly);
             Refresh();
 
             return Task.CompletedTask;
@@ -84,40 +84,27 @@ namespace Maincotech.Blazor.Routing
             var relativeUri = NavigationManager.ToBaseRelativePath(_location);
 
             relativeUri = relativeUri.IndexOf('#') >= 0 ? relativeUri.Substring(0, relativeUri.IndexOf('#')) : relativeUri;
-
             var currentCulture = LanguageService.CurrentCulture;
-
-            var segment = relativeUri.IndexOf('/') > 0 ? relativeUri.Substring(0, relativeUri.IndexOf('/')) : null;
-
-            if (segment == null)
+            if (EnablePathLocaliazation)
             {
-                if (EnablePathLocaliazation)
+                var segment = relativeUri.IndexOf('/') > 0 ? relativeUri.Substring(0, relativeUri.IndexOf('/')) : null;
+
+                if (segment == null)
                 {
                     NavigationManager.NavigateTo($"{currentCulture.Name}/{relativeUri}", true);
+                    return;
                 }
                 else
                 {
-                    NavigationManager.NavigateTo($"{relativeUri}", true);
-                }
-                return;
-            }
-            else
-            {
-                if (AllCultureInfos.Any(x => x.Name == segment))
-                {
-                    LanguageService.SetLanguage(CultureInfo.GetCultureInfo(segment));
-                }
-                else
-                {
-                    if (EnablePathLocaliazation)
+                    if (AllCultureInfos.Any(x => x.Name == segment))
                     {
-                        NavigationManager.NavigateTo($"en-US/{relativeUri}", true);
+                        LanguageService.SetLanguage(CultureInfo.GetCultureInfo(segment));
                     }
                     else
                     {
-                        NavigationManager.NavigateTo($"{relativeUri}", true);
+                        NavigationManager.NavigateTo($"en-US/{relativeUri}", true);
+                        return;
                     }
-                    return;
                 }
             }
 
@@ -126,7 +113,6 @@ namespace Maincotech.Blazor.Routing
             if (matchResult.IsMatch)
             {
                 var routeData = new RouteData(matchResult.MatchedRoute.PageType, matchResult.MatchedRoute.Parameters);
-
                 _renderHandle.Render(Found(routeData));
             }
             else
