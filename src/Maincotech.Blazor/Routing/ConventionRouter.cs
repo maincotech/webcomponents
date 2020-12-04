@@ -26,6 +26,8 @@ namespace Maincotech.Blazor.Routing
 
         [Parameter] public string DefaultUrl { get; set; }
 
+        [Parameter] public bool EnablePathLocaliazation { get; set; } = true;
+
         private static CultureInfo[] AllCultureInfos => CultureInfo.GetCultures(CultureTypes.AllCultures);
 
         public void Attach(RenderHandle renderHandle)
@@ -89,7 +91,14 @@ namespace Maincotech.Blazor.Routing
 
             if (segment == null)
             {
-                NavigationManager.NavigateTo($"{currentCulture.Name}/{relativeUri}", true);
+                if (EnablePathLocaliazation)
+                {
+                    NavigationManager.NavigateTo($"{currentCulture.Name}/{relativeUri}", true);
+                }
+                else
+                {
+                    NavigationManager.NavigateTo($"{relativeUri}", true);
+                }
                 return;
             }
             else
@@ -100,7 +109,14 @@ namespace Maincotech.Blazor.Routing
                 }
                 else
                 {
-                    NavigationManager.NavigateTo($"en-US/{relativeUri}", true);
+                    if (EnablePathLocaliazation)
+                    {
+                        NavigationManager.NavigateTo($"en-US/{relativeUri}", true);
+                    }
+                    else
+                    {
+                        NavigationManager.NavigateTo($"{relativeUri}", true);
+                    }
                     return;
                 }
             }
@@ -117,7 +133,14 @@ namespace Maincotech.Blazor.Routing
             {
                 if (!string.IsNullOrEmpty(DefaultUrl))
                 {
-                    NavigationManager.NavigateTo($"{currentCulture}/{DefaultUrl}", true);
+                    if (EnablePathLocaliazation)
+                    {
+                        NavigationManager.NavigateTo($"{currentCulture}/{DefaultUrl}", true);
+                    }
+                    else
+                    {
+                        NavigationManager.NavigateTo($"{DefaultUrl}", true);
+                    }
                 }
 
                 _renderHandle.Render(NotFound);
