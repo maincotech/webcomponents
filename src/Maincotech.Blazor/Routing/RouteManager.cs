@@ -65,7 +65,7 @@ namespace Maincotech.Blazor.Routing
                 }
             }
 
-          //  Routes.AddRange(routesList);
+            //  Routes.AddRange(routesList);
         }
 
         public MatchResult Match(string relativeUri)
@@ -118,6 +118,60 @@ namespace Maincotech.Blazor.Routing
         public void RegisterRoutes(IEnumerable<Route> routes)
         {
             Routes.AddRange(routes);
+        }
+
+        public void RegisterRoute(Type pageType, string areaName = null)
+        {
+            if (Routes.Any(x => x.PageType == pageType))
+            {
+                return;
+            }
+            if (pageType.FullName == null)
+            {
+                return;
+            }
+            var uriSegments = pageType.FullName.Substring(pageType.FullName.IndexOf("Pages", StringComparison.Ordinal) + 6).Split('.');
+
+            var routeAttributes = pageType.GetCustomAttributes<RouteAttribute>(inherit: false);
+
+            if (!routeAttributes.Any())
+            {
+                if (areaName.IsNotNullOrEmpty())
+                {
+                    routeAttributes = new[] { new RouteAttribute($"/{string.Join("/", uriSegments)}"), };
+                }
+                else
+                {
+                    routeAttributes = new[] { new RouteAttribute($"/{areaName}/{string.Join("/", uriSegments)}"), };
+                }
+            }
+
+            var templates = routeAttributes.Select(t => t.Template).ToArray();
+            if (areaName.IsNotNullOrEmpty())
+            {
+                templates = templates.Select(t => $"/{areaName}{t}").ToArray();
+            }
+            var parsedTemplates = templates.Select(TemplateParser.ParseTemplate).ToArray();
+            var allRouteParameterNames = parsedTemplates
+                .SelectMany(GetParameterNames)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+
+            foreach (var parsedTemplate in parsedTemplates)
+            {
+                var unusedRouteParameterNames = allRouteParameterNames
+                    .Except(GetParameterNames(parsedTemplate), StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
+
+                var newRoute = new Route
+                {
+                    PageType = pageType,
+                    Template = parsedTemplate,
+                    UnusedRouteParameterNames = unusedRouteParameterNames
+                };
+
+                Routes.Add(newRoute);
+            }
         }
 
         public void RegisterRoutesInAssembly(Assembly appAssembly, string areaName)
