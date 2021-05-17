@@ -38,7 +38,7 @@
           WrapperCol="new ColLayoutParam { Span = 12 }"
           Loading="_loading">
         <FormItem Label="Language">
-            <Select Options="@_languages" @bind-Value="CurrentLanguage" OnChange="OnChange"></Select>
+            <Select TItem="LabeledValue" TItemValue="string" Options="@_languages" @bind-Value="CurrentLanguage" OnSelectedItemChanged="OnSelectedLanChanged"></Select>
         </FormItem>
         <FormItem Label="Terms">
             <TextArea MinRows="1" @bind-Value="Terms" />

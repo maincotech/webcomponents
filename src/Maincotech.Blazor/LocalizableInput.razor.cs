@@ -110,7 +110,7 @@
             _visible = true;
         }
 
-        private void OnChange(OneOf<string, IEnumerable<string>, LabeledValue, IEnumerable<LabeledValue>> value, OneOf<SelectOption, IEnumerable<SelectOption>> option)
+        private void OnSelectedLanChanged(LabeledValue newItem)
         {
             try
             {
@@ -121,8 +121,8 @@
             {
                 IsLoading = false;
             }
-            // Console.WriteLine($"selected: ${value}");
         }
+     
 
         private async Task HandleOk(MouseEventArgs e)
         {
