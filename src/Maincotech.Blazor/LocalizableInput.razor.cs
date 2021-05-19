@@ -47,6 +47,11 @@
                 NameChanged.InvokeAsync(_name);
             }
         }
+        [Parameter]
+        public string CopyText { get; set; } = "Copy";
+
+        [Parameter]
+        public string AddTermText { get; set; } = "Add term";
 
         [Parameter]
         public List<string> SupportLanguages { get; set; }
@@ -102,7 +107,7 @@
             foreach (var lan in SupportLanguages)
             {
                 _languages.Add(new LabeledValue(lan, lan));
-            }
+            }            
         }
 
         private void ShowModal()

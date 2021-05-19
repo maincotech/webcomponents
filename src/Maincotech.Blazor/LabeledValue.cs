@@ -9,8 +9,8 @@
             Disabled = disabled;
         }
 
-        public string Key { get; }
-        public object Label { get; }
-        public bool Disabled { get; }
+        public string Key { get; set; }
+        public object Label { get; set; }
+        public bool Disabled { get; set; }
     }
 }

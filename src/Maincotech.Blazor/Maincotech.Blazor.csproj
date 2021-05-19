@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net50</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Minghao Li</Authors>
     <Company>Maincotech</Company>

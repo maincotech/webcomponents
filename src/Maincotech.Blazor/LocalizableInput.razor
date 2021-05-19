@@ -1,19 +1,21 @@
 ﻿<div class="code-box">
     <section>
         @*<AntDesign.Input @bind-Value="Name" OnChange="OnNameChanged" TValue="string">
-        </AntDesign.Input>*@
+            </AntDesign.Input>*@
         @ChildContent
     </section>
 
     <section class="code-box-meta markdown">
         <div class="code-box-actions">
-            <Icon OnClick="ShowModal" Type="translation"></Icon>
-            <Icon OnClick="@(async _=>await Copy())" Type="copy"></Icon>
+            <Tooltip Title="@AddTermText">
+                <Icon OnClick="ShowModal" Type="translation"></Icon>
+            </Tooltip>
+            <Tooltip Title="@CopyText">
+                <Icon OnClick="@(async _=>await Copy())" Type="copy"></Icon>
+            </Tooltip>
         </div>
     </section>
 </div>
-
-
 
 @{
     RenderFragment footer = @<Template>
@@ -25,7 +27,6 @@
         <Button OnClick="@HandleCancel" @key="@( "back" )">Return</Button>
     </Template>;
 
-   
 }
 
 <Modal Title="@("Localization")"
@@ -38,7 +39,7 @@
           WrapperCol="new ColLayoutParam { Span = 12 }"
           Loading="_loading">
         <FormItem Label="Language">
-            <Select TItem="LabeledValue" TItemValue="string" Options="@_languages" @bind-Value="CurrentLanguage" OnSelectedItemChanged="OnSelectedLanChanged"></Select>
+            <Select TItem="LabeledValue" LabelName="@nameof(LabeledValue.Label)" ValueName="@nameof(LabeledValue.Key)" TItemValue="string" DataSource="@_languages" @bind-Value="CurrentLanguage" OnSelectedItemChanged="OnSelectedLanChanged"></Select>
         </FormItem>
         <FormItem Label="Terms">
             <TextArea MinRows="1" @bind-Value="Terms" />
