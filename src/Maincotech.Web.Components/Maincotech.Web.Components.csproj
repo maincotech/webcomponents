@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net50</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <Company>Maincotech</Company>
     <Authors>Minghao Li</Authors>
     <Description>Web components including JQuery, Vditor, DocumentMetadata, ImangeHandler</Description>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Maincotech</Copyright>
     <PackageProjectUrl>https://github.com/maincotech/webcomponents</PackageProjectUrl>
     <RepositoryUrl>https://github.com/maincotech/webcomponents</RepositoryUrl>
-    <Version>1.3.0</Version>
+    <Version>1.3.2</Version>
   </PropertyGroup>
 
 
